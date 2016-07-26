@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 System.register([], function (_export, _context) {
   "use strict";
@@ -14,7 +14,7 @@ System.register([], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
-      _export('CytoscapeHelper', CytoscapeHelper = function () {
+      _export("CytoscapeHelper", CytoscapeHelper = function () {
         function CytoscapeHelper() {
           _classCallCheck(this, CytoscapeHelper);
 
@@ -86,17 +86,10 @@ System.register([], function (_export, _context) {
           this.setLayout();
         };
 
-        CytoscapeHelper.prototype.setImage = function setImage() {
-          var png64 = this.cy.png({ full: true });
-
-          var ele = document.getElementById('png-eg');
-          debugger;
-          ele.src = png64;
-        };
-
         CytoscapeHelper.prototype.createCY = function createCY() {
           this.cy = cytoscape({
-            container: document.getElementById('cy')
+            container: document.getElementById('cy'),
+            wheelSensitivity: 0.1
           });
         };
 
@@ -231,7 +224,7 @@ System.register([], function (_export, _context) {
         return CytoscapeHelper;
       }());
 
-      _export('CytoscapeHelper', CytoscapeHelper);
+      _export("CytoscapeHelper", CytoscapeHelper);
     }
   };
 });
