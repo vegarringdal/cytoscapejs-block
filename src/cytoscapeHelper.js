@@ -218,7 +218,7 @@ export class CytoscapeHelper {
       return 1;
     }, // number of ranks to keep between the source and target of the edge
     edgeWeight: function (edge) {
-      return 0.1;
+      return 1;
     }, // higher weight edges are generally made shorter and straighter than lower weight edges
 
     // general layout options
