@@ -29,7 +29,7 @@ System.register([], function (_export, _context) {
               return 1;
             },
             edgeWeight: function edgeWeight(edge) {
-              return 0.1;
+              return 1;
             },
             fit: true,
             padding: 20,
