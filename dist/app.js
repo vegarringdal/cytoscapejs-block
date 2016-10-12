@@ -69,7 +69,7 @@ System.register(['aurelia-framework', './cytoscapeHelper'], function (_export, _
 
           this.showTools = false;
           var cablesOption = cables.length ? cables : this.testCables;
-          this.cytoscape.generate(cablesOption);
+          this.cytoscape.generate(cablesOption, this.toToBottom);
         };
 
         function App(cytoscape) {
@@ -77,6 +77,7 @@ System.register(['aurelia-framework', './cytoscapeHelper'], function (_export, _
 
           this.textArea = "";
           this.showTools = true;
+          this.toToBottom = true;
           this.testCables = [{ tag: "cable1", tagFrom: "light_01", tagTo: "light_02", type: "BFOU-2x4mm2", areaFrom: "LV Room", areaTo: "Office_1" }, { tag: "cable2", tagFrom: "light_02", tagTo: "light_03", type: "BFOU-2x2.5mm2", areaFrom: "Office_1", areaTo: "Office_1" }, { tag: "cable3", tagFrom: "light_03", tagTo: "light_04", type: "BFOU-2x2.5mm2", areaFrom: "Office_1", areaTo: "Office_2" }, { tag: "cable4", tagFrom: "light_04", tagTo: "light_05", type: "BFOU-2x2.5mm2", areaFrom: "Office_2", areaTo: "Office_2" }, { tag: "cable5", tagFrom: "light_05", tagTo: "light_06", type: "BFOU-2x2.5mm2", areaFrom: "Office_2", areaTo: "Office_3" }, { tag: "cable6", tagFrom: "light_06", tagTo: "light_07", type: "BFOU-2x2.5mm2", areaFrom: "Office_3", areaTo: "Office_3" }, { tag: "cable7", tagFrom: "light_07", tagTo: "light_08", type: "BFOU-2x2.5mm2", areaFrom: "Office_3", areaTo: "Office_3" }, { tag: "cable9", tagFrom: "light_07", tagTo: "light_010", type: "BFOU-2x2.5mm2", areaFrom: "Office_3", areaTo: "Office_4" }, { tag: "cable8", tagFrom: "light_08", tagTo: "light_09", type: "BFOU-2x2.5mm2", areaFrom: "Office_4", areaTo: "Office_4" }];
 
           this.cytoscape = cytoscape;

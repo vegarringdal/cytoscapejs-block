@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 System.register([], function (_export, _context) {
   "use strict";
@@ -14,7 +14,7 @@ System.register([], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
-      _export("CytoscapeHelper", CytoscapeHelper = function () {
+      _export('CytoscapeHelper', CytoscapeHelper = function () {
         function CytoscapeHelper() {
           _classCallCheck(this, CytoscapeHelper);
 
@@ -79,7 +79,10 @@ System.register([], function (_export, _context) {
           };
         }
 
-        CytoscapeHelper.prototype.generate = function generate(cables) {
+        CytoscapeHelper.prototype.generate = function generate(cables, toToBottom) {
+
+          this.dagreLayout.rankDir = toToBottom ? 'TB' : 'LR';
+
           this.createCY();
           this.addStyle();
           this.createData(cables);
@@ -147,9 +150,9 @@ System.register([], function (_export, _context) {
             parent = parent = cable.areaTo || "NA";
             nodes.push({
               data: {
-                id: cable.tagFrom + cable.tagTo + i,
+                id: cable.tag + '\n' + cable.type + " ",
                 parent: parent,
-                type: "bendPoint"
+                type: "test"
               }
             });
 
@@ -157,7 +160,7 @@ System.register([], function (_export, _context) {
               data: {
                 id: cable.tag + 'x' + cable.tagTo + i,
                 source: cable.tagFrom,
-                target: cable.tagFrom + cable.tagTo + i,
+                target: cable.tag + '\n' + cable.type + " ",
                 type: "bendPoint"
               }
             });
@@ -165,7 +168,7 @@ System.register([], function (_export, _context) {
             edges.push({
               data: {
                 id: cable.tag + '\n' + cable.type,
-                source: cable.tagFrom + cable.tagTo + i,
+                source: cable.tag + '\n' + cable.type + " ",
                 target: cable.tagTo
               }
             });
@@ -203,7 +206,6 @@ System.register([], function (_export, _context) {
             'target-arrow-shape': 'triangle',
             'curve-style': 'bezier'
           }).selector('edge').css({
-            'label': 'data(id)',
             'width': 1,
             'line-color': '#ccc',
 
@@ -214,6 +216,14 @@ System.register([], function (_export, _context) {
             'target-arrow-shape': 'none',
             'opacity': 1,
             'label': 'data(none)'
+          }).selector('node[type = "test" ]').css({
+            'width': 100,
+            'target-arrow-shape': 'none',
+            'opacity': 1,
+            'background-color': 'white',
+            'text-wrap': 'wrap',
+            "font-size": 10,
+            'label': 'data(id)'
           });
         };
 
@@ -224,7 +234,7 @@ System.register([], function (_export, _context) {
         return CytoscapeHelper;
       }());
 
-      _export("CytoscapeHelper", CytoscapeHelper);
+      _export('CytoscapeHelper', CytoscapeHelper);
     }
   };
 });
