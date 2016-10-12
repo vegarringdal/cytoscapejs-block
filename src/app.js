@@ -6,6 +6,7 @@ export class App {
 
   textArea = "";
   showTools = true;
+  toToBottom = true;
 
 
   showConfig() {
@@ -61,7 +62,7 @@ export class App {
 
     this.showTools = false;
     let cablesOption = cables.length ? cables : this.testCables;
-    this.cytoscape.generate(cablesOption);
+    this.cytoscape.generate(cablesOption, this.toToBottom);
   }
 
 

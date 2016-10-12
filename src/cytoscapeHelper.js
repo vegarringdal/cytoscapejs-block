@@ -4,7 +4,10 @@ export class CytoscapeHelper {
   /********************************************
    *  call to generate
    * ******************************************/
-  generate(cables) {
+  generate(cables, toToBottom) {
+
+    this.dagreLayout.rankDir= toToBottom ? 'TB':'LR'
+
     this.createCY();
     this.addStyle();
     this.createData(cables);
@@ -27,7 +30,7 @@ export class CytoscapeHelper {
    *  creates the data nodes/edges
    * ******************************************/
   createData(cables) {
-
+    
     //this is not very good atm, but works..
 
     let addedEq = new Set();
@@ -92,9 +95,9 @@ export class CytoscapeHelper {
       parent = parent = cable.areaTo || "NA";
       nodes.push({
         data: {
-          id: cable.tagFrom + cable.tagTo + i,
+          id: cable.tag + '\n' + cable.type + " ",
           parent: parent,
-          type: "bendPoint"
+          type: "test"
         }
       });
 
@@ -104,7 +107,7 @@ export class CytoscapeHelper {
         data: {
           id: cable.tag + 'x' + cable.tagTo + i,
           source: cable.tagFrom,
-          target: cable.tagFrom + cable.tagTo + i,
+          target: cable.tag + '\n' + cable.type + " ",
           type: "bendPoint"
         }
       });
@@ -112,7 +115,7 @@ export class CytoscapeHelper {
       edges.push({
         data: {
           id: cable.tag + '\n' + cable.type,
-          source: cable.tagFrom + cable.tagTo + i,
+          source: cable.tag + '\n' + cable.type + " ",
           target: cable.tagTo
         }
       })
@@ -172,7 +175,7 @@ export class CytoscapeHelper {
       })
       .selector('edge')
       .css({
-        'label': 'data(id)',
+        //'label': 'data(id)',
         'width': 1,
         'line-color': '#ccc',
         //'edge-text-rotation': 'autorotate',
@@ -192,6 +195,16 @@ export class CytoscapeHelper {
         'target-arrow-shape': 'none',
         'opacity': 1,
         'label': 'data(none)'
+      })
+      .selector('node[type = "test" ]')
+      .css({
+        'width': 100,
+        'target-arrow-shape': 'none',
+        'opacity': 1,
+        'background-color': 'white',
+        'text-wrap': 'wrap',
+        "font-size": 10,
+        'label': 'data(id)'
       })
   }
 
