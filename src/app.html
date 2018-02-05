@@ -1,18 +1,18 @@
 <template>
   <div id="tools">
-    <button show.bind="!showTools" click.delegate="showConfig()" >Show config</button>
+    <button show.bind="!showTools" click.delegate="showConfig()">Show config</button>
 
-    <button show.bind="!showTools" click.delegate="generateImage()" >generateImage</button>
+    <button show.bind="!showTools" click.delegate="generateImage()">generateImage</button>
 
     <div class="col-md-12 col-md-offset-1" if.bind="showTools">
       <h3>Block generator</h3>
       <div class="row">
-      <button click.delegate="generate()">Generate</button>
-      <input type="checkbox" checked.bind="toToBottom">
+        <button click.delegate="generate()">Generate</button>
+        <input type="checkbox" checked.bind="toToBottom">
       </div>
       <div class="row">
-      <p>Paste in tab delimited data : Tag  ->  TagFrom  ->  TagTo  ->  CableType  ->  AreaFrom  ->  AreaTo</p>
-      <textarea style="width:600px;height:600px;border:1px solid"value.bind="textArea"></textarea>
+        <p>Paste in tab delimited data : Tag -> TagFrom -> TagTo -> CableType -> AreaFrom -> AreaTo</p>
+        <textarea style="width:600px;height:600px;border:1px solid" value.bind="textArea"></textarea>
       </div>
     </div>
   </div>

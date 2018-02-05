@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+      "eg2.tslint",
+      "joelday.docthis",
+      "pflannery.vscode-versionlens",
+      "patrys.vscode-code-outline",
+      "christian-kohler.path-intellisense"
+    ]
+  }
