@@ -32,7 +32,6 @@ export class App implements IElement {
         this.cytoscape = cytoscape;
     }
 
-
     // mandatory
     public loadTemplate() {
         // you could just return string here like this:

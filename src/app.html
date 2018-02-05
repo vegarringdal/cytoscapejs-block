@@ -1,18 +1,33 @@
 <template>
   <div id="tools">
-    <button show.bind="!showTools" click.delegate="showConfig()">Show config</button>
+    <button show.bind="!showTools" click.delegate="showConfig()">Back</button>
 
-    <button show.bind="!showTools" click.delegate="generateImage()">generateImage</button>
+    <button show.bind="!showTools" click.delegate="generateImage()">Generate image</button>
 
     <div class="col-md-12 col-md-offset-1" if.bind="showTools">
-      <h3>Block generator</h3>
+      <h2>Block Generator</h2>
       <div class="row">
-        <button click.delegate="generate()">Generate</button>
-        <input type="checkbox" checked.bind="toToBottom">
+        <button click.delegate="generate()">Generate block</button>
+        <br>
+        <label>
+          <input type="checkbox" checked.bind="toToBottom"> vertical block
+        </label>
       </div>
       <div class="row">
-        <p>Paste in tab delimited data : Tag -> TagFrom -> TagTo -> CableType -> AreaFrom -> AreaTo</p>
-        <textarea style="width:600px;height:600px;border:1px solid" value.bind="textArea"></textarea>
+        <p>Paste in tab delimited data with these columns
+          <ul>
+            <li>Tag</li>
+            <li>TagFrom</li>
+            <li>TagTo</li>
+            <li>CableType</li>
+            <li>AreaFrom</li>
+            <li>AreaTo</li>
+          </ul>
+        </p>
+        <br> Generator will use test data if nothing is added.
+        <br>
+
+        <textarea style="width:600px;height:300px;border:1px solid" value.bind="textArea"></textarea>
       </div>
     </div>
   </div>
