@@ -55,6 +55,7 @@ export class App implements IElement {
         x.src = jpg64;
         window.open(x.src, '_blank');
         x.src = '';
+
     }
 
 

@@ -1,5 +1,6 @@
-
-declare var cytoscape: any;
+const cytoscape = require('cytoscape');
+const cytoscapeDagre = require('cytoscape-dagre');
+cytoscape.use(cytoscapeDagre);
 
 export class CytoscapeHelper {
 
@@ -39,55 +40,6 @@ export class CytoscapeHelper {
     };
 
 
-    /********************************************
-     *  1 extra layout not in cytoscape by default
-     * ******************************************/
-    public cosebilkentLayout: any = {
-        name: 'cose-bilkent',
-        // Called on `layoutready`
-        ready: function () {
-            // na
-        },
-        // Called on `layoutstop`
-        stop: function () {
-            // na
-        },
-        // Whether to fit the network view after when done
-        fit: true,
-        // Padding on fit
-        padding: 10,
-        // Whether to enable incremental mode
-        randomize: true,
-        // Node repulsion (non overlapping) multiplier
-        nodeRepulsion: 4500,
-        // Ideal edge (non nested) length
-        idealEdgeLength: 200,
-        // Divisor to compute edge forces
-        edgeElasticity: 0.45, // 0.45,
-        // Nesting factor (multiplier) to compute ideal edge length for nested edges
-        nestingFactor: 0.1,
-        // Gravity force (constant)
-        gravity: 0.9,
-        // Maximum number of iterations to perform
-        numIter: 2500,
-        // For enabling tiling
-        tile: true,
-        // Type of layout animation. The option set is {'during', 'end', false}
-        animate: 'end',
-        // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
-        tilingPaddingVertical: 100,
-        // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
-        tilingPaddingHorizontal: 100,
-        // Gravity range (constant) for compounds
-        gravityRangeCompound: 1.5,
-        // Gravity force (constant) for compounds
-        gravityCompound: 1.0,
-        // Gravity range (constant)
-        gravityRange: 3.8
-    };
-
-
-
 
     /********************************************
      *  call to generate
@@ -107,6 +59,8 @@ export class CytoscapeHelper {
      *  creates the cy element
      * ******************************************/
     public createCY() {
+
+
         this.cy = cytoscape({
             container: document.getElementById('cy'),
             wheelSensitivity: 0.1
@@ -270,13 +224,6 @@ export class CytoscapeHelper {
                 'text-wrap': 'wrap',
                 'font-size': 10
             })
-            /*.selector('selected')
-             .css({
-             'background-color': 'black',
-             'line-color': 'black',
-             'target-arrow-color': 'black',
-             'source-arrow-color': 'black'
-             })*/
             .selector('edge[type = "bendPoint" ]')
             .css({
                 'width': 1,
@@ -301,7 +248,8 @@ export class CytoscapeHelper {
      *  sets the layout
      * ******************************************/
     public setLayout() {
-        this.cy.layout(this.dagreLayout);
+
+        this.cy.layout(this.dagreLayout).run();
     }
 
 

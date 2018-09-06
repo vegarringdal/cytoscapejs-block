@@ -1,4 +1,5 @@
 const { FuseBox, QuantumPlugin, WebIndexPlugin, Sparky, HTMLPlugin, CSSPlugin } = require("fuse-box");
+const BASE_PATH = './';
 
 // get typechecker helper
 const Typechecker = require('fuse-box-typechecker').TypeHelper
@@ -14,7 +15,7 @@ let runTypeChecker = () => {
         basePath: './',
         tsLint: './tslint.json',
         yellowOnLint: true
-    })
+    });
     typechecker.runSync();
 }
 
@@ -27,17 +28,7 @@ let bundleName = "app";
 let instructions = `
     > main.ts 
     + **/*.{ts,html,css} 
-    + fuse-box-css
-    + mframejs`;
-
-
-
-
-/*     Sources:
-    https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.3.0/cytoscape-dagre.js
-    https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.js
-    https://cdnjs.cloudflare.com/ajax/libs/cytoscape/2.7.0/cytoscape.min.js
-    https://cdn.rawgit.com/cytoscape/cytoscape.js-cose-bilkent/1.3.6/cytoscape-cose-bilkent.js */
+`;
 
 let webIndexTemplate =
     `<!DOCTYPE html>
@@ -45,10 +36,6 @@ let webIndexTemplate =
         <head>
         <meta charset="utf-8">
         <title>block generator</title>
-        <script src="./libs/cytoscape.min.js"></script>
-        <script src="./libs/cytoscape-cose-bilkent.js"></script>
-        <script src="./libs/dagre.js"></script>
-        <script src="./libs/cytoscape-dagre.js"></script>
         <link rel="stylesheet" href="./styles/bootstrap.min.css">
         <link rel="stylesheet" href="./styles/styles.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,10 +54,6 @@ let webIndexTemplateProduction = `
       <head>
         <meta charset="utf-8">
         <title>block generator</title>
-        <script src="./libs/cytoscape.min.js"></script>
-        <script src="./libs/cytoscape-cose-bilkent.js"></script>
-        <script src="./libs/dagre.js"></script>
-        <script src="./libs/cytoscape-dagre.js"></script>
         <link rel="stylesheet" href="./styles/bootstrap.min.css">
         <link rel="stylesheet" href="./styles/styles.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,11 +69,11 @@ let webIndexTemplateProduction = `
 Sparky.task("config", () => {
     fuse = FuseBox.init({
         homeDir: "src",
-        globals: { 'default': '*' }, // we need to expore index in our bundles
+        globals: { 'default': '*' },
         target: target,
         output: isProduction ? "build/$name.js" : "dist/$name.js",
         cache: false,
-        tsConfig: [{ target: bundleName }], // override tsConfig
+        tsConfig: [{ target: bundleName }],
         plugins: [
             CSSPlugin(),
             HTMLPlugin(),
@@ -129,28 +112,21 @@ Sparky.task("clean-gh", () => {
     return Sparky.src("build/").clean("build/");
 });
 
-const BASE_PATH = './';
+
 
 Sparky.task('copy-css', () => {
     return Sparky.src('*.*', {
         base: BASE_PATH + 'styles'
     })
-        .dest(BASE_PATH + isProduction ? 'build/styles' : 'dist/styles');
+        .dest(BASE_PATH + (isProduction ? 'build/styles' : 'dist/styles'));
 });
 
-Sparky.task('copy-lib', () => {
-    return Sparky.src('*.*', {
-        base: BASE_PATH + 'libs'
-    })
-        .dest(BASE_PATH + isProduction ? 'build/libs' : 'dist/libs');
-});
 
-Sparky.task("build", ["clean-gh", "copy-css", "copy-lib", "production", "config"], () => {
-    //  fuse.dev(); // want to run it for now
+Sparky.task("build", ["production", "clean-gh", "copy-css", "production", "config"], () => {
     fuse.run();
 });
 
-Sparky.task("default", ["clean", "copy-css", "copy-lib", "config"], () => {
+Sparky.task("default", ["clean", "copy-css", "config"], () => {
     fuse.dev();
     bundle.hmr().watch();
     fuse.run();

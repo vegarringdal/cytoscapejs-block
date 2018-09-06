@@ -19,16 +19,18 @@
   },
   "homepage": "https://github.com/mframejs",
   "devDependencies": {
-    "fuse-box": "^3.0.2",
-    "typescript": "^2.7.1",
-    "fuse-box-typechecker": "2.7.1",
-    "source-map": "^0.7.0",
-    "tslint": "^5.9.1",
+    "fuse-box": "^3.5.0",
+    "typescript": "^3.0.3",
+    "fuse-box-typechecker": "2.10.0",
+    "source-map": "^0.7.3",
+    "tslint": "^5.11.0",
     "uglify-es": "^3.3.9",
-    "uglify-js": "^3.3.9",
-    "mframejs": "0.0.1-next.7"
+    "uglify-js": "^3.4.9",
+    "mframejs": "0.1.7"
   },
   "dependencies": {
-    "tslib": "^1.9.0"
+    "cytoscape": "^3.2.16",
+    "cytoscape-dagre": "^2.2.1",
+    "tslib": "^1.9.3"
   }
 }
