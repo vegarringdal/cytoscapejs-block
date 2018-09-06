@@ -50,12 +50,11 @@ export class App implements IElement {
     }
 
     public generateImage() {
-        let jpg64 = this.cytoscape.cy.png({ full: true, scale: 3 });
-        let x: any = document.getElementById('image');
-        x.src = jpg64;
-        window.open(x.src, '_blank');
-        x.src = '';
-
+        const jpg64 = this.cytoscape.cy.png({ full: true, scale: 3 });
+        const image = new Image();
+        image.src = jpg64;
+        const w = window.open('');
+        w.document.write(image.outerHTML);
     }
 
 
