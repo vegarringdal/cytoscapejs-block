@@ -32,10 +32,8 @@ export class App implements IElement {
         this.cytoscape = cytoscape;
     }
 
-    // mandatory
+
     public loadTemplate() {
-        // you could just return string here like this:
-        // '<template><p>${title}</p></template>'
         return require('./app.html');
     }
 
@@ -68,26 +66,19 @@ export class App implements IElement {
             lines.forEach((line) => {
                 let columns = line.split('\t');
                 if (columns.length === 1) {
-                    columns = line.split(';'); // maybe we are using semi column
+                    columns = line.split(';');
                     if (columns.length === 1) {
-                        columns = line.split('    '); // for broken tab
+                        columns = line.split('    ');
                     }
                 }
-                switch (columns.length) {
-                    case 3:
-                        cables.push({ tag: columns[0], tagFrom: columns[1], tagTo: columns[2], type: 'NA', areaFrom: 'NA', areaTo: 'NA' });
-                        break;
-                    case 4:
-                        cables.push({ tag: columns[0], tagFrom: columns[1], tagTo: columns[2], type: columns[3], areaFrom: 'NA', areaTo: 'NA' });
-                        break;
-                    case 5:
-                        cables.push({ tag: columns[0], tagFrom: columns[1], tagTo: columns[2], type: columns[3], areaFrom: columns[4], areaTo: 'NA' });
-                        break;
-                    case 6:
-                        cables.push({ tag: columns[0], tagFrom: columns[1], tagTo: columns[2], type: columns[3], areaFrom: columns[4], areaTo: columns[5] });
-                        break;
-                    default:
-                }
+                cables.push({
+                    tag: columns[0] || 'NA',
+                    tagFrom: columns[1] || 'NA',
+                    tagTo: columns[2] || 'NA',
+                    type: columns[3] || 'NA',
+                    areaFrom: columns[4] || 'NA',
+                    areaTo: columns[5] || 'NA'
+                });
             });
         }
 
