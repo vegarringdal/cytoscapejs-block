@@ -162,21 +162,52 @@ export class CytoscapeHelper {
             });
 
 
-            // create edge: fromtag -> cable name
+            //
+            // add x node *
+            //
+            let X = i + 'pointX' + i;
+            nodes.push({
+                data: {
+                    id: X,
+                    parent: areaTo,
+                    type: 'bendPoint'
+                }
+            });
+
+
+            // create edges
+            // fromtag --->  X ---> cableID ---> toTag
+
+            // fromtag --->  X
+            let edgeID01 = tagFrom + X + i;
             edges.push({
                 data: {
-                    id: tagFrom + tagTo + i,
+                    id: edgeID01,
                     source: tagFrom,
+                    target: X,
+                    type: 'bendPoint'
+
+                }
+            });
+
+
+            // X ---> cableID
+            let edgeID02 = X + cableID + i;
+            edges.push({
+                data: {
+                    id: edgeID02,
+                    source: X,
                     target: cableID,
                     type: 'bendPoint'
                 }
             });
 
 
-            // create edge: cabletag -> totag
+            // cableID ---> toTag
+            let edgeID03 = cableID + tagTo + i;
             edges.push({
                 data: {
-                    id: tagTo + tagFrom + i,
+                    id: edgeID03,
                     source: cableID,
                     target: tagTo,
                     customType: 'line'
