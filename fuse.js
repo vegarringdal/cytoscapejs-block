@@ -11,7 +11,7 @@ const typecheckerInstance = Typechecker({
     tsLint: './tslint.json',
     yellowOnLint: true
 });
-typecheckerInstance.startTreadAndWait();
+
 
 // variables
 let fuse, bundle;
@@ -87,8 +87,12 @@ task("config", () => {
         .instructions(instructions)
         .sourceMaps(watchAndSourceMap)
         .completed(proc => {
-            console.log(`\x1b[36m%s\x1b[0m`, `app bundled- running typecheck`);
-            typecheckerInstance.useThreadAndTypecheck();
+            if (isProduction) {
+                typecheckerInstance.runSync();
+            } else {
+                console.log(`\x1b[36m%s\x1b[0m`, `app bundled- running typecheck`);
+                typecheckerInstance.useThreadAndTypecheck();
+            }
         });
 });
 
@@ -128,6 +132,7 @@ task("build", ["production", "clean-build", "copy-css", "production", "config"],
 
 
 task("default", ["clean", "copy-css", "config"], () => {
+    typecheckerInstance.startTreadAndWait();
     fuse.dev();
     bundle.hmr().watch();
     fuse.run();
