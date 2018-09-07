@@ -9,8 +9,8 @@ var app_1 = require("./app");
 mframejs_1.configure(app_1.App).then(function (mf) {
     mf.start(document.body);
 });
-console.log('build-06.09.2018');
-//# sourceMappingURL=app.js.map?tm=1536242834518
+console.log('build-07.09.2018-v2');
+//# sourceMappingURL=app.js.map?tm=1536347786972
 });
 ___scope___.file("app.js", function(exports, require, module, __filename, __dirname){
 
@@ -26,22 +26,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mframejs_1 = require("mframejs");
 var cytoscapeHelper_1 = require("./cytoscapeHelper");
+require("./index.css");
 var App = (function () {
     function App(cytoscape) {
-        this.title = 'My Empty Project';
+        this.copyright = 'Copyright (c) 2018 Vegar Ringdal vegar.ringdal@gmail.com';
         this.textArea = '';
         this.showTools = true;
         this.toToBottom = true;
         this.testCables = [
-            { tag: 'cable1', tagFrom: 'light_01', tagTo: 'light_02', type: 'BFOU-2x4mm2', areaFrom: 'LV Room', areaTo: 'Office_1' },
-            { tag: 'cable2', tagFrom: 'light_02', tagTo: 'light_03', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_1' },
-            { tag: 'cable3', tagFrom: 'light_03', tagTo: 'light_04', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_2' },
-            { tag: 'cable4', tagFrom: 'light_04', tagTo: 'light_05', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
-            { tag: 'cable5', tagFrom: 'light_05', tagTo: 'light_06', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_3' },
-            { tag: 'cable6', tagFrom: 'light_06', tagTo: 'light_07', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_3' },
-            { tag: 'cable7', tagFrom: 'light_07', tagTo: 'light_08', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_3' },
-            { tag: 'cable9', tagFrom: 'light_07', tagTo: 'light_010', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_4' },
-            { tag: 'cable8', tagFrom: 'light_08', tagTo: 'light_09', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_4', areaTo: 'Office_4' }
+            { tag: 'R-82-7895_01', tagFrom: 'Dist_board', tagTo: 'JUNCTION_BOX_1', type: 'BFOU-2x4mm2', areaFrom: 'LV Room', areaTo: 'Hall' },
+            { tag: 'R-82-7895_02', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_02', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Hall' },
+            { tag: 'R-82-7895_04', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_04', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_1' },
+            { tag: 'R-82-7895_07', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_07', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_2' },
+            { tag: 'R-82-7895_12', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_12', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_3' },
+            { tag: 'R-82-7895_03', tagFrom: 'LIGHT_02', tagTo: 'LIGHT_03', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Hall' },
+            { tag: 'R-82-7895_05', tagFrom: 'LIGHT_04', tagTo: 'LIGHT_05', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_1' },
+            { tag: 'R-82-7895_06', tagFrom: 'LIGHT_05', tagTo: 'LIGHT_06', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_1' },
+            { tag: 'R-82-7895_08', tagFrom: 'LIGHT_07', tagTo: 'LIGHT_08', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
+            { tag: 'R-82-7895_09', tagFrom: 'LIGHT_08', tagTo: 'LIGHT_09', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
+            { tag: 'R-82-7895_10', tagFrom: 'LIGHT_08', tagTo: 'LIGHT_10', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
+            { tag: 'R-82-7895_11', tagFrom: 'LIGHT_10', tagTo: 'LIGHT_11', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
+            { tag: 'R-82-7895_13', tagFrom: 'LIGHT_12', tagTo: 'LIGHT_13', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_3' }
         ];
         this.cytoscape = cytoscape;
     }
@@ -58,7 +63,7 @@ var App = (function () {
         var jpg64 = this.cytoscape.cy.png({ full: true, scale: 3 });
         var image = new Image();
         image.src = jpg64;
-        var w = window.open("");
+        var w = window.open('');
         w.document.write(image.outerHTML);
     };
     App.prototype.generate = function () {
@@ -73,21 +78,14 @@ var App = (function () {
                         columns = line.split('    ');
                     }
                 }
-                switch (columns.length) {
-                    case 3:
-                        cables.push({ tag: columns[0], tagFrom: columns[1], tagTo: columns[2], type: 'NA', areaFrom: 'NA', areaTo: 'NA' });
-                        break;
-                    case 4:
-                        cables.push({ tag: columns[0], tagFrom: columns[1], tagTo: columns[2], type: columns[3], areaFrom: 'NA', areaTo: 'NA' });
-                        break;
-                    case 5:
-                        cables.push({ tag: columns[0], tagFrom: columns[1], tagTo: columns[2], type: columns[3], areaFrom: columns[4], areaTo: 'NA' });
-                        break;
-                    case 6:
-                        cables.push({ tag: columns[0], tagFrom: columns[1], tagTo: columns[2], type: columns[3], areaFrom: columns[4], areaTo: columns[5] });
-                        break;
-                    default:
-                }
+                cables.push({
+                    tag: columns[0] || 'NA',
+                    tagFrom: columns[1] || 'NA',
+                    tagTo: columns[2] || 'NA',
+                    type: columns[3] || 'NA',
+                    areaFrom: columns[4] || 'NA',
+                    areaTo: columns[5] || 'NA'
+                });
             });
         }
         this.showTools = false;
@@ -101,7 +99,7 @@ var App = (function () {
     return App;
 }());
 exports.App = App;
-//# sourceMappingURL=app.js.map?tm=1536242834518
+//# sourceMappingURL=app.js.map?tm=1536347786972
 });
 ___scope___.file("cytoscapeHelper.js", function(exports, require, module, __filename, __dirname){
 
@@ -118,7 +116,7 @@ var CytoscapeHelper = (function () {
             rankSep: 50,
             rankDir: 'TB',
             minLen: function () {
-                return 1;
+                return 0.5;
             },
             edgeWeight: function () {
                 return 1;
@@ -152,63 +150,69 @@ var CytoscapeHelper = (function () {
         var addedEq = new Set();
         var nodes = [];
         var edges = [];
-        var parent = 'NA';
         cables.forEach(function (cable, i) {
-            if (!addedEq.has(cable.tagFrom)) {
-                addedEq.add(cable.tagFrom);
-                parent = cable.areaFrom || 'NA';
-                if (!addedEq.has(parent)) {
+            var tag = cable.tag;
+            var cableType = cable.type;
+            var areaFrom = cable.areaFrom;
+            var areaTo = cable.areaTo;
+            var tagFrom = cable.tagFrom;
+            var tagTo = cable.tagTo;
+            if (!addedEq.has(tagFrom)) {
+                addedEq.add(tagFrom);
+                if (!addedEq.has(areaFrom)) {
+                    addedEq.add(areaFrom);
                     nodes.push({
                         data: {
-                            id: parent
+                            id: areaFrom
                         }
                     });
                 }
                 nodes.push({
                     data: {
-                        id: cable.tagFrom,
-                        parent: parent
+                        id: tagFrom,
+                        parent: areaFrom
                     }
                 });
             }
-            if (!addedEq.has(cable.tagTo)) {
-                addedEq.add(cable.tagTo);
-                parent = parent = cable.areaTo || 'NA';
-                if (!addedEq.has(parent)) {
+            if (!addedEq.has(tagTo)) {
+                addedEq.add(tagTo);
+                if (!addedEq.has(areaTo)) {
+                    addedEq.add(areaTo);
                     nodes.push({
                         data: {
-                            id: parent
+                            id: areaTo
                         }
                     });
                 }
                 nodes.push({
                     data: {
-                        id: cable.tagTo,
-                        parent: parent
+                        id: tagTo,
+                        parent: areaTo
                     }
                 });
             }
-            parent = parent = cable.areaTo || 'NA';
+            var cableID = tag + '\n' + cableType + ' ';
             nodes.push({
                 data: {
-                    id: cable.tag + '\n' + cable.type + ' ',
-                    parent: parent,
-                    type: 'test'
+                    id: cableID,
+                    parent: areaTo,
+                    type: 'cableTag'
                 }
             });
             edges.push({
                 data: {
-                    id: cable.tag + 'x' + cable.tagTo + i,
-                    source: cable.tagFrom,
-                    target: cable.tag + '\n' + cable.type + ' ',
+                    id: tagFrom + tagTo + i,
+                    source: tagFrom,
+                    target: cableID,
                     type: 'bendPoint'
                 }
             });
             edges.push({
                 data: {
-                    id: cable.tag + '\n' + cable.type,
-                    source: cable.tag + '\n' + cable.type + ' ',
-                    target: cable.tagTo
+                    id: tagTo + tagFrom + i,
+                    source: cableID,
+                    target: tagTo,
+                    customType: 'line'
                 }
             });
         });
@@ -226,14 +230,17 @@ var CytoscapeHelper = (function () {
             'text-valign': 'center',
             'text-halign': 'center',
             'shape': 'rectangle',
+            'background-color': 'white',
+            'border-width': '1',
+            'border-color': '#ccc',
             'width': '150',
             'height': '18',
             'font-size': 11
         })
             .selector('node[type = "bendPoint"]')
             .css({
-            'width': '8.00001px',
-            'height': '8.00001px',
+            'width': '1.00001px',
+            'height': '1.00001px',
             'label': 'data(none)'
         })
             .selector('$node > node')
@@ -266,11 +273,12 @@ var CytoscapeHelper = (function () {
             'opacity': 1,
             'label': 'data(none)'
         })
-            .selector('node[type = "test" ]')
+            .selector('node[type = "cableTag" ]')
             .css({
             'width': 100,
             'target-arrow-shape': 'none',
             'opacity': 1,
+            'border-width': '0',
             'background-color': 'white',
             'text-wrap': 'wrap',
             'font-size': 10,
@@ -283,16 +291,16 @@ var CytoscapeHelper = (function () {
     return CytoscapeHelper;
 }());
 exports.CytoscapeHelper = CytoscapeHelper;
-//# sourceMappingURL=app.js.map?tm=1536242834518
-});
-___scope___.file("app.html", function(exports, require, module, __filename, __dirname){
-
-module.exports.default =  "<template>\r\n  <div id=\"tools\">\r\n    <button show.bind=\"!showTools\" click.delegate=\"showConfig()\">Back</button>\r\n\r\n    <button show.bind=\"!showTools\" click.delegate=\"generateImage()\">Generate image</button>\r\n\r\n    <div class=\"col-md-12 col-md-offset-1\" if.bind=\"showTools\">\r\n      <h2>Block Generator</h2>\r\n      <div class=\"row\">\r\n        <button click.delegate=\"generate()\">Generate block</button>\r\n        <br>\r\n        <label>\r\n          <input type=\"checkbox\" checked.bind=\"toToBottom\"> vertical block\r\n        </label>\r\n      </div>\r\n      <div class=\"row\">\r\n        <p>Paste in tab delimited data with these columns\r\n          <ul>\r\n            <li>Tag</li>\r\n            <li>TagFrom</li>\r\n            <li>TagTo</li>\r\n            <li>CableType</li>\r\n            <li>AreaFrom</li>\r\n            <li>AreaTo</li>\r\n          </ul>\r\n        </p>\r\n        <br> Generator will use test data if nothing is added.\r\n        <br>\r\n\r\n        <textarea style=\"width:600px;height:300px;border:1px solid\" value.bind=\"textArea\"></textarea>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div show.bind=\"!showTools\" style=\"width:100%;height:100%\" id=\"cy\"></div>\r\n  <image id=\"image\"></image>\r\n</template>"
+//# sourceMappingURL=app.js.map?tm=1536347786972
 });
 ___scope___.file("index.css", function(exports, require, module, __filename, __dirname){
 
 
-require("fuse-box-css")("default/index.css", "body {\r\n    margin: 0;\r\n}\r\n")
+require("fuse-box-css")("default/index.css", "\r\n\r\nhtml, body {\r\nmargin:20px;\r\nheight:100%;\r\nwidth:100%;\r\n}\r\n\r\n.splash {\r\ntext-align: center;\r\nmargin: 10% 0 0 0;\r\nbox-sizing: border-box;\r\n}\r\n\r\n.splash .message {\r\nfont-size: 72px;\r\nline-height: 72px;\r\ntext-shadow: rgba(0, 0, 0, 0.5) 0 0 15px;\r\ntext-transform: uppercase;\r\nfont-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\r\n}\r\n\r\n.splash .fa-spinner {\r\ntext-align: center;\r\ndisplay: inline-block;\r\nfont-size: 72px;\r\nmargin-top: 50px;\r\n}\r\n  \r\n  \r\n#cy {\r\n    height: 100%;\r\n    width: 100%;\r\n    position: absolute;\r\n    left: 150px;\r\n    top: 20px;\r\n}\r\n\r\n#tools{\r\n    position: absolute;\r\n    z-index:100;\r\n}\r\n\r\n.copy{\r\n    left: 0;\r\n    top: 0;\r\n    float: right;\r\n    position: absolute;\r\n}")
+});
+___scope___.file("app.html", function(exports, require, module, __filename, __dirname){
+
+module.exports.default =  "<template>\r\n  <div class=\"copy\">${copyright}</div>\r\n\r\n  <div id=\"tools\">\r\n\r\n    <button show.bind=\"!showTools\" click.delegate=\"showConfig()\">Back</button>\r\n\r\n    <button show.bind=\"!showTools\" click.delegate=\"generateImage()\">Generate image</button>\r\n\r\n    <div class=\"col-md-12 col-md-offset-1\" if.bind=\"showTools\">\r\n      <h2>Block Generator</h2>\r\n\r\n      <div class=\"row\">\r\n        <button click.delegate=\"generate()\">Generate block</button>\r\n        <br>\r\n        <label>\r\n          <input type=\"checkbox\" checked.bind=\"toToBottom\"> vertical block\r\n        </label>\r\n      </div>\r\n\r\n      <div class=\"row\">\r\n        <p>Paste in tab delimited data with these columns (copy from excel..)\r\n          <ul>\r\n            <li>Tag</li>\r\n            <li>TagFrom</li>\r\n            <li>TagTo</li>\r\n            <li>CableType</li>\r\n            <li>AreaFrom</li>\r\n            <li>AreaTo</li>\r\n          </ul>\r\n        </p>\r\n        <br> Generator will use test data if nothing is added.\r\n        <br>\r\n\r\n        <textarea style=\"width:600px;height:300px;border:1px solid\" value.bind=\"textArea\"></textarea>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div show.bind=\"!showTools\" style=\"width:100%;height:100%\" id=\"cy\"></div>\r\n  <image id=\"image\"></image>\r\n</template>"
 });
 return ___scope___.entry = "main.js";
 });
@@ -53859,4 +53867,4 @@ FuseBox.expose([{"alias":"*","pkg":"default/main.js"}]);
 FuseBox.main("default/main.js");
 })
 (function(e){function r(e){var r=e.charCodeAt(0),n=e.charCodeAt(1);if((m||58!==n)&&(r>=97&&r<=122||64===r)){if(64===r){var t=e.split("/"),i=t.splice(2,t.length).join("/");return[t[0]+"/"+t[1],i||void 0]}var o=e.indexOf("/");if(o===-1)return[e];var a=e.substring(0,o),f=e.substring(o+1);return[a,f]}}function n(e){return e.substring(0,e.lastIndexOf("/"))||"./"}function t(){for(var e=[],r=0;r<arguments.length;r++)e[r]=arguments[r];for(var n=[],t=0,i=arguments.length;t<i;t++)n=n.concat(arguments[t].split("/"));for(var o=[],t=0,i=n.length;t<i;t++){var a=n[t];a&&"."!==a&&(".."===a?o.pop():o.push(a))}return""===n[0]&&o.unshift(""),o.join("/")||(o.length?"/":".")}function i(e){var r=e.match(/\.(\w{1,})$/);return r&&r[1]?e:e+".js"}function o(e){if(m){var r,n=document,t=n.getElementsByTagName("head")[0];/\.css$/.test(e)?(r=n.createElement("link"),r.rel="stylesheet",r.type="text/css",r.href=e):(r=n.createElement("script"),r.type="text/javascript",r.src=e,r.async=!0),t.insertBefore(r,t.firstChild)}}function a(e,r){for(var n in e)e.hasOwnProperty(n)&&r(n,e[n])}function f(e){return{server:require(e)}}function u(e,n){var o=n.path||"./",a=n.pkg||"default",u=r(e);if(u&&(o="./",a=u[0],n.v&&n.v[a]&&(a=a+"@"+n.v[a]),e=u[1]),e)if(126===e.charCodeAt(0))e=e.slice(2,e.length),o="./";else if(!m&&(47===e.charCodeAt(0)||58===e.charCodeAt(1)))return f(e);var s=x[a];if(!s){if(m&&"electron"!==_.target)throw"Package not found "+a;return f(a+(e?"/"+e:""))}e=e?e:"./"+s.s.entry;var l,d=t(o,e),c=i(d),p=s.f[c];return!p&&c.indexOf("*")>-1&&(l=c),p||l||(c=t(d,"/","index.js"),p=s.f[c],p||"."!==d||(c=s.s&&s.s.entry||"index.js",p=s.f[c]),p||(c=d+".js",p=s.f[c]),p||(p=s.f[d+".jsx"]),p||(c=d+"/index.jsx",p=s.f[c])),{file:p,wildcard:l,pkgName:a,versions:s.v,filePath:d,validPath:c}}function s(e,r,n){if(void 0===n&&(n={}),!m)return r(/\.(js|json)$/.test(e)?h.require(e):"");if(n&&n.ajaxed===e)return console.error(e,"does not provide a module");var i=new XMLHttpRequest;i.onreadystatechange=function(){if(4==i.readyState)if(200==i.status){var n=i.getResponseHeader("Content-Type"),o=i.responseText;/json/.test(n)?o="module.exports = "+o:/javascript/.test(n)||(o="module.exports = "+JSON.stringify(o));var a=t("./",e);_.dynamic(a,o),r(_.import(e,{ajaxed:e}))}else console.error(e,"not found on request"),r(void 0)},i.open("GET",e,!0),i.send()}function l(e,r){var n=y[e];if(n)for(var t in n){var i=n[t].apply(null,r);if(i===!1)return!1}}function d(e){if(null!==e&&["function","object","array"].indexOf(typeof e)!==-1&&!e.hasOwnProperty("default"))return Object.isFrozen(e)?void(e.default=e):void Object.defineProperty(e,"default",{value:e,writable:!0,enumerable:!1})}function c(e,r){if(void 0===r&&(r={}),58===e.charCodeAt(4)||58===e.charCodeAt(5))return o(e);var t=u(e,r);if(t.server)return t.server;var i=t.file;if(t.wildcard){var a=new RegExp(t.wildcard.replace(/\*/g,"@").replace(/[.?*+^$[\]\\(){}|-]/g,"\\$&").replace(/@@/g,".*").replace(/@/g,"[a-z0-9$_-]+"),"i"),f=x[t.pkgName];if(f){var p={};for(var v in f.f)a.test(v)&&(p[v]=c(t.pkgName+"/"+v));return p}}if(!i){var g="function"==typeof r,y=l("async",[e,r]);if(y===!1)return;return s(e,function(e){return g?r(e):null},r)}var w=t.pkgName;if(i.locals&&i.locals.module)return i.locals.module.exports;var b=i.locals={},j=n(t.validPath);b.exports={},b.module={exports:b.exports},b.require=function(e,r){var n=c(e,{pkg:w,path:j,v:t.versions});return _.sdep&&d(n),n},m||!h.require.main?b.require.main={filename:"./",paths:[]}:b.require.main=h.require.main;var k=[b.module.exports,b.require,b.module,t.validPath,j,w];return l("before-import",k),i.fn.apply(k[0],k),l("after-import",k),b.module.exports}if(e.FuseBox)return e.FuseBox;var p="undefined"!=typeof ServiceWorkerGlobalScope,v="undefined"!=typeof WorkerGlobalScope,m="undefined"!=typeof window&&"undefined"!=typeof window.navigator||v||p,h=m?v||p?{}:window:global;m&&(h.global=v||p?{}:window),e=m&&"undefined"==typeof __fbx__dnm__?e:module.exports;var g=m?v||p?{}:window.__fsbx__=window.__fsbx__||{}:h.$fsbx=h.$fsbx||{};m||(h.require=require);var x=g.p=g.p||{},y=g.e=g.e||{},_=function(){function r(){}return r.global=function(e,r){return void 0===r?h[e]:void(h[e]=r)},r.import=function(e,r){return c(e,r)},r.on=function(e,r){y[e]=y[e]||[],y[e].push(r)},r.exists=function(e){try{var r=u(e,{});return void 0!==r.file}catch(e){return!1}},r.remove=function(e){var r=u(e,{}),n=x[r.pkgName];n&&n.f[r.validPath]&&delete n.f[r.validPath]},r.main=function(e){return this.mainFile=e,r.import(e,{})},r.expose=function(r){var n=function(n){var t=r[n].alias,i=c(r[n].pkg);"*"===t?a(i,function(r,n){return e[r]=n}):"object"==typeof t?a(t,function(r,n){return e[n]=i[r]}):e[t]=i};for(var t in r)n(t)},r.dynamic=function(r,n,t){this.pkg(t&&t.pkg||"default",{},function(t){t.file(r,function(r,t,i,o,a){var f=new Function("__fbx__dnm__","exports","require","module","__filename","__dirname","__root__",n);f(!0,r,t,i,o,a,e)})})},r.flush=function(e){var r=x.default;for(var n in r.f)e&&!e(n)||delete r.f[n].locals},r.pkg=function(e,r,n){if(x[e])return n(x[e].s);var t=x[e]={};return t.f={},t.v=r,t.s={file:function(e,r){return t.f[e]={fn:r}}},n(t.s)},r.addPlugin=function(e){this.plugins.push(e)},r.packages=x,r.isBrowser=m,r.isServer=!m,r.plugins=[],r}();return m||(h.FuseBox=_),e.FuseBox=_}(this))
-//# sourceMappingURL=app.js.map?tm=1536242834518
+//# sourceMappingURL=app.js.map?tm=1536347786972

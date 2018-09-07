@@ -1,5 +1,6 @@
 import { IElement, inject } from 'mframejs';
 import { CytoscapeHelper } from './cytoscapeHelper';
+import './index.css';
 
 
 
@@ -8,7 +9,7 @@ export class App implements IElement {
     // references to this $element and parent
     public $element: IElement;
     public $parent: IElement;
-    public title = 'My Empty Project';
+    public copyright = 'Copyright (c) 2018 Vegar Ringdal vegar.ringdal@gmail.com';
     public textArea = '';
     public showTools = true;
     public toToBottom = true;
@@ -16,15 +17,19 @@ export class App implements IElement {
 
     // for testing purposes so it generates something without data
     public testCables: any = [
-        { tag: 'cable1', tagFrom: 'light_01', tagTo: 'light_02', type: 'BFOU-2x4mm2', areaFrom: 'LV Room', areaTo: 'Office_1' },
-        { tag: 'cable2', tagFrom: 'light_02', tagTo: 'light_03', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_1' },
-        { tag: 'cable3', tagFrom: 'light_03', tagTo: 'light_04', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_2' },
-        { tag: 'cable4', tagFrom: 'light_04', tagTo: 'light_05', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
-        { tag: 'cable5', tagFrom: 'light_05', tagTo: 'light_06', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_3' },
-        { tag: 'cable6', tagFrom: 'light_06', tagTo: 'light_07', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_3' },
-        { tag: 'cable7', tagFrom: 'light_07', tagTo: 'light_08', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_3' },
-        { tag: 'cable9', tagFrom: 'light_07', tagTo: 'light_010', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_4' },
-        { tag: 'cable8', tagFrom: 'light_08', tagTo: 'light_09', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_4', areaTo: 'Office_4' }
+        { tag: 'R-82-7895_01', tagFrom: 'Dist_board', tagTo: 'JUNCTION_BOX_1', type: 'BFOU-2x4mm2', areaFrom: 'LV Room', areaTo: 'Hall' },
+        { tag: 'R-82-7895_02', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_02', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Hall' },
+        { tag: 'R-82-7895_04', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_04', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_1' },
+        { tag: 'R-82-7895_07', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_07', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_2' },
+        { tag: 'R-82-7895_12', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_12', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_3' },
+        { tag: 'R-82-7895_03', tagFrom: 'LIGHT_02', tagTo: 'LIGHT_03', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Hall' },
+        { tag: 'R-82-7895_05', tagFrom: 'LIGHT_04', tagTo: 'LIGHT_05', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_1' },
+        { tag: 'R-82-7895_06', tagFrom: 'LIGHT_05', tagTo: 'LIGHT_06', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_1' },
+        { tag: 'R-82-7895_08', tagFrom: 'LIGHT_07', tagTo: 'LIGHT_08', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
+        { tag: 'R-82-7895_09', tagFrom: 'LIGHT_08', tagTo: 'LIGHT_09', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
+        { tag: 'R-82-7895_10', tagFrom: 'LIGHT_08', tagTo: 'LIGHT_10', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
+        { tag: 'R-82-7895_11', tagFrom: 'LIGHT_10', tagTo: 'LIGHT_11', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
+        { tag: 'R-82-7895_13', tagFrom: 'LIGHT_12', tagTo: 'LIGHT_13', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_3' }
     ];
 
 

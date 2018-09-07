@@ -157,7 +157,7 @@ export class CytoscapeHelper {
                 data: {
                     id: cableID,
                     parent: areaTo,
-                    type: 'test'
+                    type: 'cableTag'
                 }
             });
 
@@ -208,14 +208,17 @@ export class CytoscapeHelper {
                 'text-valign': 'center',
                 'text-halign': 'center',
                 'shape': 'rectangle',
+                'background-color': 'white',
+                'border-width': '1',
+                'border-color': '#ccc',
                 'width': '150',
                 'height': '18',
                 'font-size': 11
             })
             .selector('node[type = "bendPoint"]')
             .css({
-                'width': '8.00001px',
-                'height': '8.00001px',
+                'width': '1.00001px',
+                'height': '1.00001px',
                 'label': 'data(none)'
             })
 
@@ -238,10 +241,8 @@ export class CytoscapeHelper {
             })
             .selector('edge')
             .css({
-                // 'label': 'data(id)',
                 'width': 1,
                 'line-color': '#ccc',
-                // 'edge-text-rotation': 'autorotate',
                 'text-wrap': 'wrap',
                 'font-size': 10
             })
@@ -252,11 +253,12 @@ export class CytoscapeHelper {
                 'opacity': 1,
                 'label': 'data(none)'
             })
-            .selector('node[type = "test" ]')
+            .selector('node[type = "cableTag" ]')
             .css({
                 'width': 100,
                 'target-arrow-shape': 'none',
                 'opacity': 1,
+                'border-width': '0',
                 'background-color': 'white',
                 'text-wrap': 'wrap',
                 'font-size': 10,
@@ -270,7 +272,6 @@ export class CytoscapeHelper {
      * ******************************************/
     public setLayout() {
         this.cy.layout(this.dagreLayout).run();
-        debugger;
     }
 
 

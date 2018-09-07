@@ -1,23 +1,17 @@
-const { FuseBox, QuantumPlugin, WebIndexPlugin, Sparky, HTMLPlugin, CSSPlugin } = require("fuse-box");
+const { FuseBox, QuantumPlugin, WebIndexPlugin, HTMLPlugin, CSSPlugin } = require("fuse-box");
+const { task, src } = require("fuse-box/sparky")
 const BASE_PATH = './';
 
 // get typechecker helper
 const Typechecker = require('fuse-box-typechecker').TypeHelper
-let typechecker = null;
-let runTypeChecker = () => {
-    // same color..
-    console.log(`\x1b[36m%s\x1b[0m`, `app bundled- running typecheck`);
-
-    // I could have had own for the sample...
-    typechecker = Typechecker({
-        tsConfig: './tsconfig.json',
-        name: 'src',
-        basePath: './',
-        tsLint: './tslint.json',
-        yellowOnLint: true
-    });
-    typechecker.runSync();
-}
+const typecheckerInstance = Typechecker({
+    tsConfig: './tsconfig.json',
+    name: 'src',
+    basePath: './',
+    tsLint: './tslint.json',
+    yellowOnLint: true
+});
+typecheckerInstance.startTreadAndWait();
 
 // variables
 let fuse, bundle;
@@ -30,6 +24,7 @@ let instructions = `
     + **/*.{ts,html,css} 
 `;
 
+
 let webIndexTemplate =
     `<!DOCTYPE html>
     <html>
@@ -37,7 +32,7 @@ let webIndexTemplate =
         <meta charset="utf-8">
         <title>block generator</title>
         <link rel="stylesheet" href="./styles/bootstrap.min.css">
-        <link rel="stylesheet" href="./styles/styles.css">
+  
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script type="text/javascript" charset="utf-8" src="./app.js"></script>
     </head>
@@ -55,7 +50,7 @@ let webIndexTemplateProduction = `
         <meta charset="utf-8">
         <title>block generator</title>
         <link rel="stylesheet" href="./styles/bootstrap.min.css">
-        <link rel="stylesheet" href="./styles/styles.css">
+  
         <meta name="viewport" content="width=device-width, initial-scale=1">
         $bundles
       </head>
@@ -66,7 +61,7 @@ let webIndexTemplateProduction = `
 
 
 
-Sparky.task("config", () => {
+task("config", () => {
     fuse = FuseBox.init({
         homeDir: "src",
         globals: { 'default': '*' },
@@ -92,41 +87,47 @@ Sparky.task("config", () => {
         .instructions(instructions)
         .sourceMaps(watchAndSourceMap)
         .completed(proc => {
-            runTypeChecker();
+            console.log(`\x1b[36m%s\x1b[0m`, `app bundled- running typecheck`);
+            typecheckerInstance.useThreadAndTypecheck();
         });
 });
 
 
 
-
-Sparky.task("production", () => {
+task("production", () => {
     isProduction = true;
 });
 
 
-Sparky.task("clean", () => {
-    return Sparky.src("dist/").clean("dist/");
-});
 
-Sparky.task("clean-gh", () => {
-    return Sparky.src("build/").clean("build/");
+task("clean", () => {
+    return src("dist/").clean("dist/");
 });
 
 
 
-Sparky.task('copy-css', () => {
-    return Sparky.src('*.*', {
+task("clean-build", () => {
+    return src("build/").clean("build/");
+});
+
+
+
+task('copy-css', () => {
+    return src('*.*', {
         base: BASE_PATH + 'styles'
     })
         .dest(BASE_PATH + (isProduction ? 'build/styles' : 'dist/styles'));
 });
 
 
-Sparky.task("build", ["production", "clean-gh", "copy-css", "production", "config"], () => {
+
+task("build", ["production", "clean-build", "copy-css", "production", "config"], () => {
     fuse.run();
 });
 
-Sparky.task("default", ["clean", "copy-css", "config"], () => {
+
+
+task("default", ["clean", "copy-css", "config"], () => {
     fuse.dev();
     bundle.hmr().watch();
     fuse.run();

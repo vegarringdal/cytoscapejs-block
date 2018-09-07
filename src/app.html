@@ -1,11 +1,15 @@
 <template>
+  <div class="copy">${copyright}</div>
+
   <div id="tools">
+
     <button show.bind="!showTools" click.delegate="showConfig()">Back</button>
 
     <button show.bind="!showTools" click.delegate="generateImage()">Generate image</button>
 
     <div class="col-md-12 col-md-offset-1" if.bind="showTools">
       <h2>Block Generator</h2>
+
       <div class="row">
         <button click.delegate="generate()">Generate block</button>
         <br>
@@ -13,8 +17,9 @@
           <input type="checkbox" checked.bind="toToBottom"> vertical block
         </label>
       </div>
+
       <div class="row">
-        <p>Paste in tab delimited data with these columns
+        <p>Paste in tab delimited data with these columns (copy from excel..)
           <ul>
             <li>Tag</li>
             <li>TagFrom</li>
