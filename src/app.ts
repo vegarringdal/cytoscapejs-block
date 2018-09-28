@@ -68,7 +68,7 @@ export class App implements IElement {
         if (this.textArea !== '') {
 
             let lines = this.textArea.split('\n');
-            lines.forEach((line) => {
+            lines.forEach((line, index) => {
                 let columns = line.split('\t');
                 if (columns.length === 1) {
                     columns = line.split(';');
@@ -76,14 +76,16 @@ export class App implements IElement {
                         columns = line.split('    ');
                     }
                 }
-                cables.push({
-                    tag: columns[0] || 'NA',
-                    tagFrom: columns[1] || 'NA',
-                    tagTo: columns[2] || 'NA',
-                    type: columns[3] || 'NA',
-                    areaFrom: columns[4] || 'NA',
-                    areaTo: columns[5] || 'NA'
-                });
+                if (columns[0]) {
+                    cables.push({
+                        tag: columns[0] || 'NA',
+                        tagFrom: columns[1] || 'NAfrom' + index,
+                        tagTo: columns[2] || 'NAto' + index,
+                        type: columns[3] || 'NA',
+                        areaFrom: columns[4] || 'NA',
+                        areaTo: columns[5] || 'NA'
+                    });
+                }
             });
         }
 
