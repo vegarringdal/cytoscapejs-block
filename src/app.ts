@@ -1,102 +1,123 @@
-import { IElement, inject } from 'mframejs';
-import { CytoscapeHelper } from './cytoscapeHelper';
-import './index.css';
-
-
+import { customElement, inject, property } from "@simple-html/core";
+import { CytoscapeHelper } from "./cytoscapeHelper";
+import { html } from "lit-html";
+import { dummydata } from "./dummydata";
 
 @inject(CytoscapeHelper)
-export class App implements IElement {
-    // references to this $element and parent
-    public $element: IElement;
-    public $parent: IElement;
-    public copyright = 'Copyright (c) 2018 Vegar Ringdal vegar.ringdal@gmail.com';
-    public textArea = '';
-    public showTools = true;
-    public toToBottom = true;
-    public cytoscape: any;
+@customElement("app-root")
+export class App extends HTMLElement {
+  // references to this $element and parent
+  public copyright = "Copyright (c) 2018 Vegar Ringdal vegar.ringdal@gmail.com";
+  public textArea = "";
+  @property() public showTools = "";
+  public toToBottom = true;
 
-    // for testing purposes so it generates something without data
-    public testCables: any = [
-        { tag: 'R-82-7895_01', tagFrom: 'Dist_board', tagTo: 'JUNCTION_BOX_1', type: 'BFOU-2x4mm2', areaFrom: 'LV Room', areaTo: 'Hall' },
-        { tag: 'R-82-7895_02', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_02', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Hall' },
-        { tag: 'R-82-7895_04', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_04', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_1' },
-        { tag: 'R-82-7895_07', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_07', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_2' },
-        { tag: 'R-82-7895_12', tagFrom: 'JUNCTION_BOX_1', tagTo: 'LIGHT_12', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Office_3' },
-        { tag: 'R-82-7895_03', tagFrom: 'LIGHT_02', tagTo: 'LIGHT_03', type: 'BFOU-2x2.5mm2', areaFrom: 'Hall', areaTo: 'Hall' },
-        { tag: 'R-82-7895_05', tagFrom: 'LIGHT_04', tagTo: 'LIGHT_05', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_1' },
-        { tag: 'R-82-7895_06', tagFrom: 'LIGHT_05', tagTo: 'LIGHT_06', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_1', areaTo: 'Office_1' },
-        { tag: 'R-82-7895_08', tagFrom: 'LIGHT_07', tagTo: 'LIGHT_08', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
-        { tag: 'R-82-7895_09', tagFrom: 'LIGHT_08', tagTo: 'LIGHT_09', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
-        { tag: 'R-82-7895_10', tagFrom: 'LIGHT_08', tagTo: 'LIGHT_10', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
-        { tag: 'R-82-7895_11', tagFrom: 'LIGHT_10', tagTo: 'LIGHT_11', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_2', areaTo: 'Office_2' },
-        { tag: 'R-82-7895_13', tagFrom: 'LIGHT_12', tagTo: 'LIGHT_13', type: 'BFOU-2x2.5mm2', areaFrom: 'Office_3', areaTo: 'Office_3' }
-    ];
+  public cytoscape: any;
 
+  // for testing purposes so it generates something without data
+  public testCables: any = dummydata;
 
-    constructor(cytoscape: any) {
-        this.cytoscape = cytoscape;
-    }
+  constructor(cytoscape: any) {
+    super();
+    this.cytoscape = cytoscape;
+  }
 
+  public showConfig() {
+    this.showTools = "";
+  }
 
-    public loadTemplate() {
-        return require('./app.html');
-    }
+  public hideConfig() {
+    this.showTools = "none";
+  }
 
+  public setImage() {
+    this.cytoscape.setImage();
+  }
 
-    public showConfig() {
-        this.showTools = true;
-    }
+  public generateImage() {
+    const jpg64 = this.cytoscape.cy.png({ full: true, scale: 3 });
+    const image = new Image();
+    image.src = jpg64;
+    const w = window.open("");
+    w.document.write(image.outerHTML);
+  }
 
-
-    public setImage() {
-        this.cytoscape.setImage();
-    }
-
-    public generateImage() {
-        const jpg64 = this.cytoscape.cy.png({ full: true, scale: 3 });
-        const image = new Image();
-        image.src = jpg64;
-        const w = window.open('');
-        w.document.write(image.outerHTML);
-    }
-
-
-    public generate() {
-
-
-        let cables: any = [];
-        if (this.textArea !== '') {
-
-            let lines = this.textArea.split('\n');
-            lines.forEach((line, index) => {
-                let columns = line.split('\t');
-                if (columns.length === 1) {
-                    columns = line.split(';');
-                    if (columns.length === 1) {
-                        columns = line.split('    ');
-                    }
-                }
-                if (columns[0]) {
-                    cables.push({
-                        tag: columns[0] || 'NA',
-                        tagFrom: columns[1] || 'NAfrom' + index,
-                        tagTo: columns[2] || 'NAto' + index,
-                        type: columns[3] || 'NA',
-                        areaFrom: columns[4] || 'NA',
-                        areaTo: columns[5] || 'NA'
-                    });
-                }
-            });
+  public generate() {
+    this.hideConfig();
+    let cables: any = [];
+    if (this.textArea !== "") {
+      let lines = this.textArea.split("\n");
+      lines.forEach((line, index) => {
+        let columns = line.split("\t");
+        if (columns.length === 1) {
+          columns = line.split(";");
+          if (columns.length === 1) {
+            columns = line.split("    ");
+          }
         }
-
-        this.showTools = false;
-        let cablesOption = cables.length ? cables : this.testCables;
-        this.cytoscape.generate(cablesOption, this.toToBottom);
+        if (columns[0]) {
+          cables.push({
+            tag: columns[0] || "NA",
+            tagFrom: columns[1] || "NAfrom" + index,
+            tagTo: columns[2] || "NAto" + index,
+            type: columns[3] || "NA",
+            areaFrom: columns[4] || "NA",
+            areaTo: columns[5] || "NA"
+          });
+        }
+      });
     }
 
+    let cablesOption = cables.length ? cables : this.testCables;
+    this.cytoscape.generate(cablesOption, this.toToBottom);
+  }
 
+  render() {
+    return html`
+      <header class="flex flex-shrink-0 bg-indigo-100">
+        <h1 class=" p-2 text-3xl">Block Generator</h1>
+      </header>
 
+      <div class="flex flex-row flex-grow">
+        <div class="flex-col p-2  border-r">
+          <button
+            class="bg-indigo-500 white p-2 m-2 rounded"
+            @click=${this.generate}
+          >
+            Generate block
+          </button>
+          <div>
+            <label class="p-2"
+              ><input
+                type="checkbox"
+                .checked=${this.toToBottom}
+                @click=${(e:any) => {
+                  this.toToBottom = e.target.checked;
+                }}
+              />
+              vertical block
+            </label>
+          </div>
+          <div>
+            <p class="ml-2">
+              Paste in tab delimited data with these columns
+              <br />
+              (copy from excel..)
+            </p>
+            <ul class="ml-2 p-5 list-disc">
+              <li>Tag</li>
+              <li>TagFrom</li>
+              <li>TagTo</li>
+              <li>CableType</li>
+              <li>AreaFrom</li>
+              <li>AreaTo</li>
+            </ul>
+          </div>
+          <textarea placeholder="Generator will use test data if nothing is added." class="m-2 w-56 h-56"></textarea>
+        </div>
 
-
-
+        <div class="p-1 side"><div id="cy"></div></div>
+      </div>
+    `;
+  }
 }
