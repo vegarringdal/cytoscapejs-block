@@ -10,7 +10,7 @@ export class App extends HTMLElement {
   public copyright = "Copyright (c) 2018 Vegar Ringdal vegar.ringdal@gmail.com";
   public textArea = "";
   @property() public showTools = "";
-  public toToBottom = true;
+  public verticalDraw = true;
 
   public cytoscape: any;
 
@@ -69,13 +69,14 @@ export class App extends HTMLElement {
     }
 
     let cablesOption = cables.length ? cables : this.testCables;
-    this.cytoscape.generate(cablesOption, this.toToBottom);
+    this.cytoscape.generate(cablesOption, this.verticalDraw);
   }
 
   render() {
     return html`
-      <header class="flex flex-shrink-0 bg-indigo-100">
-        <h1 class=" p-2 text-3xl">Block Generator</h1>
+      <header class="flex flex-col flex-shrink-0 border-b">
+        <h1 class="flex-1 p-2 text-3xl">Block Generator</h1>
+        <h5 class=" p-2 text" >${this.copyright}</h5>
       </header>
 
       <div class="flex flex-row flex-grow">
@@ -90,9 +91,9 @@ export class App extends HTMLElement {
             <label class="p-2"
               ><input
                 type="checkbox"
-                .checked=${this.toToBottom}
+                .checked=${this.verticalDraw}
                 @click=${(e:any) => {
-                  this.toToBottom = e.target.checked;
+                  this.verticalDraw = e.target.checked;
                 }}
               />
               vertical block
