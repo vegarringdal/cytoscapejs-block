@@ -248,8 +248,8 @@ export class CytoscapeHelper {
             })
             .selector('node[type = "bendPoint"]')
             .css({
-                'width': '1.00001px',
-                'height': '1.00001px',
+                'width': '1px',
+                'height': '1px',
                 'label': 'data(none)'
             })
 

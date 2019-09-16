@@ -7,7 +7,7 @@ import { dummydata } from "./dummydata";
 @customElement("app-root")
 export class App extends HTMLElement {
   // references to this $element and parent
-  public copyright = "Copyright (c) 2018 Vegar Ringdal vegar.ringdal@gmail.com";
+  public copyright = "Copyright (c) 2018 Vegar Ringdal <vegar.ringdal@gmail.com>";
   public textArea = "";
   @property() public showTools = "";
   public verticalDraw = true;
@@ -114,7 +114,7 @@ export class App extends HTMLElement {
               <li>AreaTo</li>
             </ul>
           </div>
-          <textarea placeholder="Generator will use test data if nothing is added." class="m-2 w-56 h-56"></textarea>
+          <textarea placeholder="Generator will use dummy data if nothing is added." class="m-2 w-56 h-56"></textarea>
         </div>
 
         <div class="p-1 side"><div id="cy"></div></div>

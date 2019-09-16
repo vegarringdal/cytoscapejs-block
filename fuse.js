@@ -4,18 +4,19 @@ const { pluginTypeChecker } = require('fuse-box-typechecker');
 // just dev mode, no production setup.
 
 class Context {
-    getConfig() {
+    getConfig(prod) {
         return fusebox({
             target: 'browser',
             homeDir: './',
-            output: `dist`,
+            output: prod ? 'build':`dist`,
             entry: `src/index.ts`,
             webIndex: {
                 template: `src/index.html`,
-                basePath: './'
+                publicPath: './'
             },
-            cache:true,
-            devServer: true,
+            cache:prod ? false: true,
+            devServer: prod ? false: true,
+            hmr: prod ? false: true,
             plugins: [
                 pluginTypeChecker({
                     basePath: './',
@@ -41,4 +42,9 @@ const { task } = sparky(Context);
 task('default', async (ctx) => {
     const fuse = ctx.getConfig(false);
     await fuse.runDev();
+});
+
+task('dist', async (ctx) => {
+    const fuse = ctx.getConfig(true);
+    await fuse.runDev(); // prod broken atm
 });
