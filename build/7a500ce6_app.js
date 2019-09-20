@@ -464,4 +464,5 @@ exports.dummydata = [
 });
 	___scope___.entry = "src/index.js";
 })
+FuseBox.import("fuse-box-hot-reload").connect({"useCurrentURL":true})
 //# sourceMappingURL=7a500ce6_app.js.map

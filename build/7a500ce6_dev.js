@@ -585,6 +585,156 @@ if ($isBrowser && $hasWindow) {
 
 })();
 FuseBox.sdep = true;
+FuseBox.reloadEntryOnStylesheet = true;
 FuseBox.processEnv = {"NODE_ENV":"development"};
 FuseBox.target = "browser";
+FuseBox.pkg("fuse-box-hot-reload", {}, function(___scope___){
+___scope___.file("index.js", function(exports, require, module){
+const __req1__ = require("fuse-box-websocket");
+function log(text) {
+  console.info(`%c${text}`, "color: #237abe");
+}
+function gatherSummary() {
+  const summary = {};
+  for (const packageName in FuseBox.packages) {
+    const files = FuseBox.packages[packageName].f;
+    summary[packageName] = [];
+    for (const fuseBoxPath in files) {
+      summary[packageName].push(fuseBoxPath);
+    }
+  }
+  return summary;
+}
+const connect = opts => {
+  let client = new __req1__.SocketClient(opts);
+  client.connect();
+  client.on("get-summary", data => {
+    const {id} = data;
+    const summary = gatherSummary();
+    client.send("summary", {
+      id,
+      summary
+    });
+  });
+  client.on("hmr", payload => {
+    let styleSheetUpdate = false;
+    if (FuseBox.reloadEntryOnStylesheet && payload.modules.length === 1 && payload.modules[0].isStylesheet) {
+      styleSheetUpdate = payload.modules[0];
+    }
+    payload.modules.forEach(item => {
+      new Function(item.content)();
+      log(`✔ module hmr: ${item.fuseBoxPath}`);
+    });
+    payload.packages.forEach(item => {
+      new Function(item.content)();
+      log(`✔ package hmr: ${item.name}`);
+    });
+    if (styleSheetUpdate) {
+      log(`✔ css reload of: ${styleSheetUpdate.fuseBoxPath}`);
+      FuseBox.flush(file => `default/${file}` === styleSheetUpdate.fuseBoxPath);
+      FuseBox.import(styleSheetUpdate.fuseBoxPath);
+    } else {
+      log(`✔ entry reload of: ${FuseBox.mainFile}`);
+      FuseBox.flush();
+      FuseBox.import(FuseBox.mainFile);
+    }
+  });
+};
+exports.connect = connect;
+
+});
+	___scope___.entry = "index.js";
+})
+FuseBox.pkg("fuse-box-websocket", {}, function(___scope___){
+___scope___.file("index.js", function(exports, require, module){
+const events = require("events");
+function log(text) {
+  console.info(`%c${text}`, "color: #237abe");
+}
+class SocketClient {
+  constructor(opts) {
+    opts = opts || ({});
+    const port = opts.port || window.location.port;
+    const protocol = location.protocol === "https:" ? "wss://" : "ws://";
+    const domain = location.hostname || "localhost";
+    if (opts.connectionURL) {
+      this.url = opts.connectionURL;
+    } else {
+      if (opts.useCurrentURL) {
+        this.url = protocol + location.hostname + (location.port ? ":" + location.port : "");
+      }
+      if (opts.port) {
+        this.url = `${protocol}${domain}:${opts.port}`;
+      }
+    }
+    this.authSent = false;
+    this.emitter = new events.EventEmitter();
+  }
+  reconnect(fn) {
+    setTimeout(() => {
+      this.emitter.emit("reconnect", {
+        message: "Trying to reconnect"
+      });
+      this.connect(fn);
+    }, 5000);
+  }
+  on(event, fn) {
+    this.emitter.on(event, fn);
+  }
+  connect(fn) {
+    setTimeout(() => {
+      log(`Connecting to FuseBox HMR at ${this.url}`);
+      this.client = new WebSocket(this.url);
+      this.bindEvents(fn);
+    }, 0);
+  }
+  close() {
+    this.client.close();
+  }
+  send(eventName, data) {
+    if (this.client.readyState === 1) {
+      this.client.send(JSON.stringify({
+        name: eventName,
+        payload: data || ({})
+      }));
+    }
+  }
+  error(data) {
+    this.emitter.emit("error", data);
+  }
+  bindEvents(fn) {
+    this.client.onopen = event => {
+      log("Connection successful");
+      if (fn) {
+        fn(this);
+      }
+    };
+    this.client.onerror = event => {
+      this.error({
+        reason: event.reason,
+        message: "Socket error"
+      });
+    };
+    this.client.onclose = event => {
+      this.emitter.emit("close", {
+        message: "Socket closed"
+      });
+      if (event.code !== 1011) {
+        this.reconnect(fn);
+      }
+    };
+    this.client.onmessage = event => {
+      let data = event.data;
+      if (data) {
+        let item = JSON.parse(data);
+        this.emitter.emit(item.name, item.payload);
+      }
+    };
+  }
+}
+exports.SocketClient = SocketClient;
+
+});
+	___scope___.entry = "index.js";
+})
 //# sourceMappingURL=7a500ce6_dev.js.map

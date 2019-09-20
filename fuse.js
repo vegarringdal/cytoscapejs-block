@@ -8,11 +8,11 @@ class Context {
         return fusebox({
             target: 'browser',
             homeDir: './',
-            output: prod ? 'build':`dist`,
+            output: prod ? 'build':`build`,
             entry: `src/index.ts`,
             webIndex: {
                 template: `src/index.html`,
-                publicPath: './'
+                publicPath: './',
             },
             cache:prod ? false: true,
             devServer: prod ? false: true,
