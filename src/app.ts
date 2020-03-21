@@ -1,9 +1,9 @@
-import { customElement, inject, property } from "@simple-html/core";
+import { customElement, property } from "@simple-html/core";
 import { CytoscapeHelper } from "./cytoscapeHelper";
 import { html } from "lit-html";
 import { dummydata } from "./dummydata";
 
-@inject(CytoscapeHelper)
+
 @customElement("app-root")
 export class App extends HTMLElement {
   // references to this $element and parent
@@ -17,9 +17,9 @@ export class App extends HTMLElement {
   // for testing purposes so it generates something without data
   public testCables: any = dummydata;
 
-  constructor(cytoscape: any) {
+  constructor() {
     super();
-    this.cytoscape = cytoscape;
+    this.cytoscape = new CytoscapeHelper();
   }
 
   public showConfig() {

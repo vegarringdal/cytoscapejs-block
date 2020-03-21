@@ -22,19 +22,19 @@
   },
   "devDependencies": {
     "fuse-box": "^4.0.0-next.134",
-    "typescript": "^3.6.3",
-    "fuse-box-typechecker": "3.0.0-next.29",
-    "cytoscape": "^3.10.0",
+    "typescript": "^3.8.3",
+    "fuse-box-typechecker": "3.0.0-next.31",
+    "cytoscape": "^3.14.1",
     "cytoscape-dagre": "^2.2.2",
-    "tslib": "^1.10.0",
-    "lit-html": "^1.1.2",
-    "@simple-html/core": "^1.0.0-alpha.1",
-    "@simple-html/router": "^1.0.0-alpha.1",
-    "@simple-html/grid": "^1.0.0-alpha.1"
+    "tslib": "^1.11.1",
+    "lit-html": "^1.2.1",
+    "@simple-html/core": "^1.0.0-alpha.9",
+    "@simple-html/router": "^1.0.0-alpha.9",
+    "@simple-html/grid": "^1.0.0-alpha.9"
   },
   "dependencies": {
-    "autoprefixer": "^9.6.1",
-    "custom-elements-hmr-polyfill": "^1.0.0-beta.5",
-    "tailwindcss": "^1.1.2"
+    "autoprefixer": "^9.7.4",
+    "custom-elements-hmr-polyfill": "^1.0.0",
+    "tailwindcss": "^1.2.0"
   }
 }
