@@ -6,8 +6,12 @@
     "type": "git",
     "url": "git+https://github.com/vegarringdal/cytoscapejs-block.git"
   },
+  "scripts": {
+    "start": "node fuse",
+    "build": "node fuse dist"
+  },
   "keywords": [
-    "mframejs",
+    "simple-html",
     "cytoscapejs",
     "cable-SLD",
     "cableblock-diagram"
@@ -17,19 +21,21 @@
   "bugs": {
     "url": "https://github.com/vegarringdal/cytoscapejs-block/issues"
   },
-  "homepage": "https://github.com/mframejs",
   "devDependencies": {
-    "fuse-box": "^3.5.0",
-    "typescript": "^3.0.3",
-    "fuse-box-typechecker": "2.10.0",
-    "source-map": "^0.7.3",
-    "tslint": "^5.11.0",
-    "uglify-es": "^3.3.9",
-    "uglify-js": "^3.4.9",
-    "mframejs": "0.1.7",
-    "cytoscape": "^3.2.16",
-    "cytoscape-dagre": "^2.2.1",
-    "tslib": "^1.9.3"
+    "@simple-html/core": "^1.0.0-alpha.9",
+    "@simple-html/grid": "^1.0.0-alpha.9",
+    "@simple-html/router": "^1.0.0-alpha.9",
+    "cytoscape": "^3.14.1",
+    "cytoscape-dagre": "^2.2.2",
+    "fuse-box": "^4.0.0-next.422",
+    "fuse-box-typechecker": "3.0.0-next.31",
+    "lit-html": "^1.2.1",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "autoprefixer": "^9.7.4",
+    "custom-elements-hmr-polyfill": "^1.0.0",
+    "tailwindcss": "^1.2.0"
+  }
 }

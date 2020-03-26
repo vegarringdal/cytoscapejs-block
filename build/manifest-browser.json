@@ -1,0 +1,16 @@
+[
+  {
+    "absPath": "D:\\github\\cytoscapejs-block\\build\\app.js",
+    "browserPath": "./app.js",
+    "relativePath": "app.js",
+    "type": "js",
+    "webIndexed": true
+  },
+  {
+    "absPath": "D:\\github\\cytoscapejs-block\\build\\styles\\styles.b1dcdc2.css",
+    "browserPath": "./styles/styles.b1dcdc2.css",
+    "relativePath": "styles/styles.b1dcdc2.css",
+    "type": "css",
+    "webIndexed": true
+  }
+]

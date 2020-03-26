@@ -1,4 +1,6 @@
+//@ts-ignore
 const cytoscape = require('cytoscape');
+//@ts-ignore
 const cytoscapeDagre = require('cytoscape-dagre');
 cytoscape.use(cytoscapeDagre);
 
@@ -248,8 +250,8 @@ export class CytoscapeHelper {
             })
             .selector('node[type = "bendPoint"]')
             .css({
-                'width': '1.00001px',
-                'height': '1.00001px',
+                'width': '1px',
+                'height': '1px',
                 'label': 'data(none)'
             })
 
