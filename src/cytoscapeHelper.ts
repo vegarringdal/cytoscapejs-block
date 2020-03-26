@@ -1,4 +1,6 @@
+//@ts-ignore
 const cytoscape = require('cytoscape');
+//@ts-ignore
 const cytoscapeDagre = require('cytoscape-dagre');
 cytoscape.use(cytoscapeDagre);
 

@@ -7,8 +7,6 @@ class Context {
     getConfig(prod) {
         return fusebox({
             target: 'browser',
-            homeDir: './',
-            output: prod ? 'dist':`dist`,
             entry: `src/index.ts`,
             webIndex: {
                 template: `src/index.html`,
@@ -46,5 +44,5 @@ task('default', async (ctx) => {
 
 task('dist', async (ctx) => {
     const fuse = ctx.getConfig(true);
-    await fuse.runDev(); // prod broken atm
+    await fuse.runProd({ bundles: { distRoot: 'build', app: 'app.js' } }); // prod broken atm
 });

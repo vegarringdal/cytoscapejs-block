@@ -7,7 +7,8 @@
     "url": "git+https://github.com/vegarringdal/cytoscapejs-block.git"
   },
   "scripts": {
-    "start": "node fuse"
+    "start": "node fuse",
+    "build": "node fuse dist"
   },
   "keywords": [
     "simple-html",
@@ -21,16 +22,16 @@
     "url": "https://github.com/vegarringdal/cytoscapejs-block/issues"
   },
   "devDependencies": {
-    "fuse-box": "^4.0.0-next.134",
-    "typescript": "^3.8.3",
-    "fuse-box-typechecker": "3.0.0-next.31",
+    "@simple-html/core": "^1.0.0-alpha.9",
+    "@simple-html/grid": "^1.0.0-alpha.9",
+    "@simple-html/router": "^1.0.0-alpha.9",
     "cytoscape": "^3.14.1",
     "cytoscape-dagre": "^2.2.2",
-    "tslib": "^1.11.1",
+    "fuse-box": "^4.0.0-next.422",
+    "fuse-box-typechecker": "3.0.0-next.31",
     "lit-html": "^1.2.1",
-    "@simple-html/core": "^1.0.0-alpha.9",
-    "@simple-html/router": "^1.0.0-alpha.9",
-    "@simple-html/grid": "^1.0.0-alpha.9"
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "autoprefixer": "^9.7.4",
