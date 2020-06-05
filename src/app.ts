@@ -114,7 +114,7 @@ export class App extends HTMLElement {
               <li>AreaTo</li>
             </ul>
           </div>
-          <textarea placeholder="Generator will use dummy data if nothing is added." class="m-2 w-56 h-56"></textarea>
+          <textarea placeholder="Generator will use dummy data if nothing is added." class="m-2 w-56 h-56" @change=${(e:any)=>{this.textArea = e.target.value}}></textarea>
         </div>
 
         <div class="p-1 side"><div id="cy"></div></div>
