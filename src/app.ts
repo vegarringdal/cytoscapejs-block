@@ -3,11 +3,11 @@ import { CytoscapeHelper } from "./cytoscapeHelper";
 import { html } from "lit-html";
 import { dummydata } from "./dummydata";
 
-
 @customElement("app-root")
 export class App extends HTMLElement {
   // references to this $element and parent
-  public copyright = "Copyright (c) 2018 Vegar Ringdal <vegar.ringdal@gmail.com>";
+  public copyright =
+    "Copyright (c) 2018 Vegar Ringdal <vegar.ringdal@gmail.com>";
   public textArea = "";
   @property() public showTools = "";
   public verticalDraw = true;
@@ -34,12 +34,17 @@ export class App extends HTMLElement {
     this.cytoscape.setImage();
   }
 
-  public generateImage() {
+  public async generateImage() {
     const jpg64 = this.cytoscape.cy.png({ full: true, scale: 3 });
-    const image = new Image();
-    image.src = jpg64;
-    const w = window.open("");
-    w.document.write(image.outerHTML);
+    const res = await fetch(jpg64);
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name + ".png";
+    document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+    a.click();
+    a.remove();
   }
 
   public generate() {
@@ -62,7 +67,7 @@ export class App extends HTMLElement {
             tagTo: columns[2] || "NAto" + index,
             type: columns[3] || "NA",
             areaFrom: columns[4] || "NA",
-            areaTo: columns[5] || "NA"
+            areaTo: columns[5] || "NA",
           });
         }
       });
@@ -76,7 +81,7 @@ export class App extends HTMLElement {
     return html`
       <header class="flex flex-col flex-shrink-0 border-b">
         <h1 class="flex-1 p-2 text-3xl">Block Generator</h1>
-        <h5 class=" p-2 text" >${this.copyright}</h5>
+        <h5 class=" p-2 text">${this.copyright}</h5>
       </header>
 
       <div class="flex flex-row flex-grow">
@@ -87,12 +92,18 @@ export class App extends HTMLElement {
           >
             Generate block
           </button>
+          <button
+            class="bg-indigo-500 white p-2 m-2 rounded"
+            @click=${this.generateImage}
+          >
+            Generate image
+          </button>
           <div>
             <label class="p-2"
               ><input
                 type="checkbox"
                 .checked=${this.verticalDraw}
-                @click=${(e:any) => {
+                @click=${(e: any) => {
                   this.verticalDraw = e.target.checked;
                 }}
               />
@@ -114,7 +125,13 @@ export class App extends HTMLElement {
               <li>AreaTo</li>
             </ul>
           </div>
-          <textarea placeholder="Generator will use dummy data if nothing is added." class="m-2 w-56 h-56" @change=${(e:any)=>{this.textArea = e.target.value}}></textarea>
+          <textarea
+            placeholder="Generator will use dummy data if nothing is added."
+            class="m-2 w-56 h-56"
+            @change=${(e: any) => {
+              this.textArea = e.target.value;
+            }}
+          ></textarea>
         </div>
 
         <div class="p-1 side"><div id="cy"></div></div>
