@@ -22,16 +22,16 @@
     "url": "https://github.com/vegarringdal/cytoscapejs-block/issues"
   },
   "devDependencies": {
-    "@simple-html/core": "^1.0.0-alpha.9",
-    "@simple-html/grid": "^1.0.0-alpha.9",
-    "@simple-html/router": "^1.0.0-alpha.9",
-    "cytoscape": "^3.14.1",
+    "@simple-html/core": "^1.0.0-alpha.43",
+    "@simple-html/grid": "^1.0.0-alpha.43",
+    "@simple-html/router": "^1.0.0-alpha.43",
+    "cytoscape": "^3.15.2",
     "cytoscape-dagre": "^2.2.2",
-    "fuse-box": "^4.0.0-next.422",
+    "fuse-box": "^4.0.0-next.439",
     "fuse-box-typechecker": "3.0.0-next.31",
     "lit-html": "^1.2.1",
-    "tslib": "^1.11.1",
-    "typescript": "^3.8.3"
+    "tslib": "^1.13.0",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "autoprefixer": "^9.7.4",
